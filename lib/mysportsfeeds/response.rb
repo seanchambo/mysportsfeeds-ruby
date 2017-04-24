@@ -3,7 +3,7 @@ module MySportsFeeds
     class Success
       attr_reader :body, :status
 
-      def initialize(body, status = :ok)
+      def initialize(body, status = 200)
         @body   = body
         @status = status
       end
@@ -16,7 +16,7 @@ module MySportsFeeds
     class Error
       attr_reader :status
 
-      def initialize(error, status = :unprocessable_entity)
+      def initialize(error, status = 422)
         @error  = error
         @status = status
       end

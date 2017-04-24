@@ -11,7 +11,7 @@ module MySportsFeeds
       response = request.run
       Response::Success.new(JSON.parse(response.response_body), response.response_code)
     rescue JSON::ParserError => e
-      Response::Error.new('Couldn\'t connect')
+      Response::Error.new(e.message)
     end
 
     def make_request(url, method, params = {})
@@ -28,7 +28,7 @@ module MySportsFeeds
     private
 
     def build_url(url)
-      "https://www.mysportsfeeds.com/api/feed/pull/nba/#{season.msf_identifier}/#{url}.#{format}"
+      "https://www.mysportsfeeds.com/api/feed/pull/nba/#{season}/#{url}.#{format}"
     end
 
     def format
@@ -36,7 +36,7 @@ module MySportsFeeds
     end
 
     def season
-      @season ||= @options.fetch(:season, Season.current)
+      @season ||= @options.fetch(:season)
     end
 
     def force
